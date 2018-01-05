@@ -279,7 +279,7 @@ public:
             }
 
             if (count > N) {
-                fArray = (T*) sk_malloc_throw(count * sizeof(T));
+                fArray = (T*) sk_malloc_throw(count, sizeof(T));
             } else if (count > 0) {
                 fArray = (T*) fStorage;
             } else {
@@ -330,7 +330,7 @@ public:
 
     /** Allocates space for 'count' Ts. */
     explicit SkAutoTMalloc(size_t count) {
-        fPtr = (T*)sk_malloc_flags(count * sizeof(T), SK_MALLOC_THROW | SK_MALLOC_TEMP);
+        fPtr = (T*)sk_malloc_throw(count, sizeof(T));
     }
 
     ~SkAutoTMalloc() {
@@ -345,7 +345,7 @@ public:
     /** Resize the memory area pointed to by the current ptr without preserving contents. */
     void reset(size_t count) {
         sk_free(fPtr);
-        fPtr = (T*)sk_malloc_flags(count * sizeof(T), SK_MALLOC_THROW | SK_MALLOC_TEMP);
+        fPtr = (T*)sk_malloc_throw(count, sizeof(T));
     }
 
     T* get() const { return fPtr; }
@@ -389,7 +389,7 @@ public:
 
     SkAutoSTMalloc(size_t count) {
         if (count > N) {
-            fPtr = (T*)sk_malloc_flags(count * sizeof(T), SK_MALLOC_THROW | SK_MALLOC_TEMP);
+            fPtr = (T*)sk_malloc_throw(count, sizeof(T));
         } else if (count) {
             fPtr = fTStorage;
         } else {
@@ -409,7 +409,7 @@ public:
             sk_free(fPtr);
         }
         if (count > N) {
-            fPtr = (T*)sk_malloc_flags(count * sizeof(T), SK_MALLOC_THROW | SK_MALLOC_TEMP);
+            fPtr = (T*)sk_malloc_throw(count, sizeof(T));
         } else if (count) {
             fPtr = fTStorage;
         } else {
